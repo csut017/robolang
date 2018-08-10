@@ -47,8 +47,8 @@ const (
 	// TokenColon is a colon sign (:)
 	TokenColon
 
-	// TokenFunction defines a function name (name)
-	TokenFunction
+	// TokenIdentifier defines an identifier (name)
+	TokenIdentifier
 
 	// TokenVariable defines a variable name (_name)
 	TokenVariable

@@ -2,7 +2,7 @@ package robolang
 
 import "testing"
 
-func TestString(t *testing.T) {
+func TestTokenString(t *testing.T) {
 	tok := Token{
 		Type:  TokenWhitespace,
 		Value: " ",

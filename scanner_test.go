@@ -19,7 +19,7 @@ func TestScanTokens(t *testing.T) {
 		{"=", Token{Type: TokenEquals, Value: "="}},
 		{"#test", Token{Type: TokenVariable, Value: "test"}},
 		{"@test", Token{Type: TokenReference, Value: "test"}},
-		{"test", Token{Type: TokenFunction, Value: "test"}},
+		{"test", Token{Type: TokenIdentifier, Value: "test"}},
 		{"'text'", Token{Type: TokenText, Value: "text"}},
 		{"1", Token{Type: TokenNumber, Value: "1"}},
 		{"1.2", Token{Type: TokenNumber, Value: "1.2"}},
@@ -51,13 +51,13 @@ func TestScanTokens(t *testing.T) {
 
 func TestScanLocation(t *testing.T) {
 	expectedResults := []Token{
-		Token{Type: TokenFunction, Value: "test", LinePos: 0, LineNum: 0},
+		Token{Type: TokenIdentifier, Value: "test", LinePos: 0, LineNum: 0},
 		Token{Type: TokenOpenBracket, Value: "(", LinePos: 4, LineNum: 0},
 		Token{Type: TokenCloseBracket, Value: ")", LinePos: 5, LineNum: 0},
 		Token{Type: TokenColon, Value: ":", LinePos: 6, LineNum: 0},
 		Token{Type: TokenNewLine, Value: "\n", LinePos: 7, LineNum: 0},
 		Token{Type: TokenWhitespace, Value: "  ", LinePos: 0, LineNum: 1},
-		Token{Type: TokenFunction, Value: "stop", LinePos: 2, LineNum: 1},
+		Token{Type: TokenIdentifier, Value: "stop", LinePos: 2, LineNum: 1},
 		Token{Type: TokenOpenBracket, Value: "(", LinePos: 6, LineNum: 1},
 		Token{Type: TokenCloseBracket, Value: ")", LinePos: 7, LineNum: 1},
 	}

@@ -32,7 +32,7 @@ func (s *Scanner) Scan() *Token {
 		return s.scanIdentifier(TokenVariable)
 	} else if s.isLetter(ch) {
 		s.unread()
-		return s.scanIdentifier(TokenFunction)
+		return s.scanIdentifier(TokenIdentifier)
 	} else if s.isDigit(ch) {
 		s.unread()
 		return s.scanNumber()
