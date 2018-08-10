@@ -70,4 +70,7 @@ const (
 
 	// NodeConstant means this node is a constant value
 	NodeConstant
+
+	// NodeResource means this node points to a resource
+	NodeResource
 )

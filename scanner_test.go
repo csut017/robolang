@@ -18,7 +18,7 @@ func TestScanTokens(t *testing.T) {
 		{")", Token{Type: TokenCloseBracket, Value: ")"}},
 		{"=", Token{Type: TokenEquals, Value: "="}},
 		{"#test", Token{Type: TokenVariable, Value: "test"}},
-		{"@test", Token{Type: TokenReference, Value: "test"}},
+		{"@test", Token{Type: TokenResource, Value: "test"}},
 		{"test", Token{Type: TokenIdentifier, Value: "test"}},
 		{"'text'", Token{Type: TokenText, Value: "text"}},
 		{"1", Token{Type: TokenNumber, Value: "1"}},

@@ -27,7 +27,7 @@ func (s *Scanner) Scan() *Token {
 		s.unread()
 		return s.makeToken(TokenWhitespace, s.scanWhitespace())
 	} else if ch == '@' {
-		return s.scanIdentifier(TokenReference)
+		return s.scanIdentifier(TokenResource)
 	} else if ch == '#' {
 		return s.scanIdentifier(TokenVariable)
 	} else if s.isLetter(ch) {

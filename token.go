@@ -53,8 +53,8 @@ const (
 	// TokenVariable defines a variable name (_name)
 	TokenVariable
 
-	// TokenReference defines a reference name (@name)
-	TokenReference
+	// TokenResource defines a resource name (@name)
+	TokenResource
 
 	// TokenText is a string constant ('text')
 	TokenText
