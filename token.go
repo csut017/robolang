@@ -20,48 +20,48 @@ type TokenType int
 //go:generate stringer -type=TokenType
 
 const (
-	// ILLEGAL is an invalid token
-	ILLEGAL TokenType = iota
+	// TokenIllegal is an invalid token
+	TokenIllegal TokenType = iota
 
-	// EOF is the end of the file
-	EOF
+	// TokenEOF is the end of the file
+	TokenEOF
 
-	// NEWLINE is the end of a line (\n)
-	NEWLINE
+	// TokenNewLine is the end of a line (\n)
+	TokenNewLine
 
-	// WHITESPACE are whitespace characters
-	WHITESPACE
+	// TokenWhitespace are whitespace characters
+	TokenWhitespace
 
-	// OPENBRACKET is an opening bracket sign (()
-	OPENBRACKET
+	// TokenOpenBracket is an opening bracket sign (()
+	TokenOpenBracket
 
-	// CLOSEBRACKET is a closing bracket sign ())
-	CLOSEBRACKET
+	// TokenCloseBracket is a closing bracket sign ())
+	TokenCloseBracket
 
-	// EQUALS is an equals sign (=)
-	EQUALS
+	// TokenEquals is an equals sign (=)
+	TokenEquals
 
-	// COMMA is a comma sign (,)
-	COMMA
+	// TokenComma is a comma sign (,)
+	TokenComma
 
-	// COLON is a colon sign (:)
-	COLON
+	// TokenColon is a colon sign (:)
+	TokenColon
 
-	// FUNCTION defines a function name (name)
-	FUNCTION
+	// TokenFunction defines a function name (name)
+	TokenFunction
 
-	// VARIABLE defines a variable name (_name)
-	VARIABLE
+	// TokenVariable defines a variable name (_name)
+	TokenVariable
 
-	// REFERENCE defines a reference name (@name)
-	REFERENCE
+	// TokenReference defines a reference name (@name)
+	TokenReference
 
-	// TEXT is a string constant ('text')
-	TEXT
+	// TokenText is a string constant ('text')
+	TokenText
 
-	// NUMBER is a numeric constant (1)
-	NUMBER
+	// TokenNumber is a numeric constant (1)
+	TokenNumber
 
-	// DURATION is a timespan (1d2h3m4s)
-	DURATION
+	// TokenDuration is a timespan (1d2h3m4s)
+	TokenDuration
 )

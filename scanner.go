@@ -25,14 +25,14 @@ func (s *Scanner) Scan() *Token {
 	// Check the multi-character tokens
 	if s.isWhitespace(ch) {
 		s.unread()
-		return s.makeToken(WHITESPACE, s.scanWhitespace())
+		return s.makeToken(TokenWhitespace, s.scanWhitespace())
 	} else if ch == '@' {
-		return s.scanIdentifier(REFERENCE)
+		return s.scanIdentifier(TokenReference)
 	} else if ch == '_' {
-		return s.scanIdentifier(VARIABLE)
+		return s.scanIdentifier(TokenVariable)
 	} else if s.isLetter(ch) {
 		s.unread()
-		return s.scanIdentifier(FUNCTION)
+		return s.scanIdentifier(TokenFunction)
 	} else if s.isDigit(ch) {
 		s.unread()
 		return s.scanNumber()
@@ -44,26 +44,26 @@ func (s *Scanner) Scan() *Token {
 	t, ok := chars[ch]
 	if ok {
 		tok := s.makeToken(t, string(ch))
-		if t == NEWLINE {
+		if t == TokenNewLine {
 			s.linePos = 0
 			s.lineNum++
 		}
 		return tok
 	}
 
-	return s.makeToken(ILLEGAL, string(ch))
+	return s.makeToken(TokenIllegal, string(ch))
 }
 
 var (
 	eof   = rune(0)
 	chars = map[rune]TokenType{
-		rune(0): EOF,
-		'\n':    NEWLINE,
-		'(':     OPENBRACKET,
-		')':     CLOSEBRACKET,
-		',':     COMMA,
-		':':     COLON,
-		'=':     EQUALS,
+		rune(0): TokenEOF,
+		'\n':    TokenNewLine,
+		'(':     TokenOpenBracket,
+		')':     TokenCloseBracket,
+		',':     TokenComma,
+		':':     TokenColon,
+		'=':     TokenEquals,
 	}
 	whitespace = map[rune]bool{
 		' ':  true,
@@ -158,9 +158,9 @@ func (s *Scanner) scanNumber() *Token {
 		numbers['-'] = false
 	}
 	if isDuration {
-		return s.makeToken(DURATION, buf.String())
+		return s.makeToken(TokenDuration, buf.String())
 	}
-	return s.makeToken(NUMBER, buf.String())
+	return s.makeToken(TokenNumber, buf.String())
 }
 
 func (s *Scanner) scanText() *Token {
@@ -175,7 +175,7 @@ func (s *Scanner) scanText() *Token {
 			buf.WriteRune(ch)
 		}
 	}
-	return s.makeToken(TEXT, buf.String())
+	return s.makeToken(TokenText, buf.String())
 }
 
 func (s *Scanner) scanWhitespace() string {
