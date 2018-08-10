@@ -1,8 +1,6 @@
 package robolang
 
-import (
-	"testing"
-)
+import "testing"
 
 func TestString(t *testing.T) {
 	tok := Token{

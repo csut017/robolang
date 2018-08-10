@@ -20,10 +20,48 @@ type TokenType int
 //go:generate stringer -type=TokenType
 
 const (
-	// ILLEGAL is an invalid token.
+	// ILLEGAL is an invalid token
 	ILLEGAL TokenType = iota
+
 	// EOF is the end of the file
 	EOF
+
+	// NEWLINE is the end of a line (\n)
+	NEWLINE
+
 	// WHITESPACE are whitespace characters
 	WHITESPACE
+
+	// OPENBRACKET is an opening bracket sign (()
+	OPENBRACKET
+
+	// CLOSEBRACKET is a closing bracket sign ())
+	CLOSEBRACKET
+
+	// EQUALS is an equals sign (=)
+	EQUALS
+
+	// COMMA is a comma sign (,)
+	COMMA
+
+	// COLON is a colon sign (:)
+	COLON
+
+	// FUNCTION defines a function name (name)
+	FUNCTION
+
+	// VARIABLE defines a variable name (_name)
+	VARIABLE
+
+	// REFERENCE defines a reference name (@name)
+	REFERENCE
+
+	// TEXT is a string constant ('text')
+	TEXT
+
+	// NUMBER is a numeric constant (1)
+	NUMBER
+
+	// DURATION is a timespan (1d2h3m4s)
+	DURATION
 )

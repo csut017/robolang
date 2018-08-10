@@ -4,9 +4,9 @@ package robolang
 
 import "strconv"
 
-const _TokenType_name = "ILLEGALEOFWHITESPACE"
+const _TokenType_name = "ILLEGALEOFNEWLINEWHITESPACEOPENBRACKETCLOSEBRACKETEQUALSCOMMACOLONFUNCTIONVARIABLEREFERENCETEXTNUMBERDURATION"
 
-var _TokenType_index = [...]uint8{0, 7, 10, 20}
+var _TokenType_index = [...]uint8{0, 7, 10, 17, 27, 38, 50, 56, 61, 66, 74, 82, 91, 95, 101, 109}
 
 func (i TokenType) String() string {
 	if i < 0 || i >= TokenType(len(_TokenType_index)-1) {
