@@ -73,4 +73,7 @@ const (
 
 	// NodeResource means this node points to a resource
 	NodeResource
+
+	// NodeVariable means this node points to a variable
+	NodeVariable
 )

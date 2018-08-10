@@ -4,9 +4,9 @@ package robolang
 
 import "strconv"
 
-const _NodeType_name = "NodeInvalidNodeFunctionNodeArgumentNodeConstantNodeResource"
+const _NodeType_name = "NodeInvalidNodeFunctionNodeArgumentNodeConstantNodeResourceNodeVariable"
 
-var _NodeType_index = [...]uint8{0, 11, 23, 35, 47, 59}
+var _NodeType_index = [...]uint8{0, 11, 23, 35, 47, 59, 71}
 
 func (i NodeType) String() string {
 	if i < 0 || i >= NodeType(len(_NodeType_index)-1) {

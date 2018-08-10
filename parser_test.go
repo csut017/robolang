@@ -27,6 +27,7 @@ func TestParseFromString(t *testing.T) {
 		{"clear()", "[NodeFunction]clear()"},
 		{"say(text='hello')", "[NodeFunction]say([NodeArgument]text()->([NodeConstant]hello()))"},
 		{"show(resource=@hello)", "[NodeFunction]show([NodeArgument]resource()->([NodeResource]hello()))"},
+		{"set(variable=#count,value=1)", "[NodeFunction]set([NodeArgument]variable()->([NodeVariable]count()),[NodeArgument]value()->([NodeConstant]1()))"},
 	}
 	for _, test := range tests {
 		t.Logf("==== Parsing `%s` ====", test.input)

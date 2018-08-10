@@ -30,8 +30,10 @@ func NewParser(s string) *Parser {
 		Log: func(string, ...interface{}) {},
 	}
 	p.functionArgMap = map[TokenType]func() (*Node, error){
+		TokenNumber:   p.parseConstant,
 		TokenResource: p.parseResource,
 		TokenText:     p.parseConstant,
+		TokenVariable: p.parseVariable,
 	}
 	return p
 }
@@ -193,6 +195,11 @@ func (p *Parser) parseItem() (*Node, error) {
 func (p *Parser) parseResource() (*Node, error) {
 	tok := p.scanNextToken()
 	return p.makeNode(tok, NodeResource), nil
+}
+
+func (p *Parser) parseVariable() (*Node, error) {
+	tok := p.scanNextToken()
+	return p.makeNode(tok, NodeVariable), nil
 }
 
 func (p *Parser) scan() *Token {
