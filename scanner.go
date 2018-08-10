@@ -28,7 +28,7 @@ func (s *Scanner) Scan() *Token {
 		return s.makeToken(TokenWhitespace, s.scanWhitespace())
 	} else if ch == '@' {
 		return s.scanIdentifier(TokenReference)
-	} else if ch == '_' {
+	} else if ch == '#' {
 		return s.scanIdentifier(TokenVariable)
 	} else if s.isLetter(ch) {
 		s.unread()
@@ -64,6 +64,13 @@ var (
 		',':     TokenComma,
 		':':     TokenColon,
 		'=':     TokenEquals,
+		'+':     TokenOperator,
+		'-':     TokenOperator,
+		'*':     TokenOperator,
+		'/':     TokenOperator,
+		'%':     TokenOperator,
+		'<':     TokenOperator,
+		'>':     TokenOperator,
 	}
 	whitespace = map[rune]bool{
 		' ':  true,
@@ -73,7 +80,7 @@ var (
 )
 
 func (s *Scanner) isDigit(ch rune) bool {
-	return (ch >= '0' && ch <= '9') || (ch == '.') || (ch == '-')
+	return (ch >= '0' && ch <= '9') || (ch == '.')
 }
 
 func (s *Scanner) isLetter(ch rune) bool {
@@ -133,7 +140,6 @@ func (s *Scanner) scanNumber() *Token {
 		'h': true,
 		'd': true,
 	}, map[rune]bool{
-		'-': true,
 		'.': true,
 	}, false
 	buf.WriteRune(s.read())
@@ -155,7 +161,6 @@ func (s *Scanner) scanNumber() *Token {
 			}
 			buf.WriteRune(ch)
 		}
-		numbers['-'] = false
 	}
 	if isDuration {
 		return s.makeToken(TokenDuration, buf.String())

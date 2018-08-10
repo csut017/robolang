@@ -64,4 +64,7 @@ const (
 
 	// TokenDuration is a timespan (1d2h3m4s)
 	TokenDuration
+
+	// TokenOperator is a maths operator (+-*/%<>)
+	TokenOperator
 )
