@@ -15,20 +15,19 @@ type Node struct {
 
 // String converts the node to a human-readable form.
 func (n *Node) String() string {
-	out := "[" + n.Type.String() + "]"
+	out := n.Type.String() + ":"
 	if n.Token == nil {
 		return out
 	}
 
-	out += n.Token.Value + "("
+	out += n.Token.Value
 	if len(n.Args) > 0 {
 		args := make([]string, len(n.Args))
 		for pos, arg := range n.Args {
 			args[pos] = arg.String()
 		}
-		out += strings.Join(args, ",")
+		out += "(" + strings.Join(args, ",") + ")"
 	}
-	out += ")"
 
 	if len(n.Children) > 0 {
 		children := make([]string, len(n.Children))

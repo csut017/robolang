@@ -30,6 +30,7 @@ func NewParser(s string) *Parser {
 		Log: func(string, ...interface{}) {},
 	}
 	p.functionArgMap = map[TokenType]func() (*Node, error){
+		TokenDuration: p.parseConstant,
 		TokenNumber:   p.parseConstant,
 		TokenResource: p.parseResource,
 		TokenText:     p.parseConstant,
@@ -91,6 +92,7 @@ func (p *Parser) makeUnexpectedError(tok *Token, expected string) error {
 
 func (p *Parser) parseConstant() (*Node, error) {
 	tok := p.scanNextToken()
+	p.Log("parsing constant %s", tok.Value)
 	return p.makeNode(tok, NodeConstant), nil
 }
 
@@ -102,6 +104,7 @@ func (p *Parser) parseFunction() (*Node, error) {
 	}
 
 	node := p.makeNode(tok, NodeFunction)
+	p.Log("parsing function %s", tok.Value)
 	if err := p.validateNextToken(TokenOpenBracket); err != nil {
 		return node, err
 	}
@@ -160,6 +163,7 @@ func (p *Parser) parseFunctionArg() (*Node, error) {
 		return p.makeNode(tok, NodeInvalid), p.makeUnexpectedError(tok, "")
 	}
 
+	p.Log("parsing function argument %s", tok.Value)
 	node := p.makeNode(tok, NodeArgument)
 	if err := p.validateNextToken(TokenEquals); err != nil {
 		return node, err
@@ -194,11 +198,13 @@ func (p *Parser) parseItem() (*Node, error) {
 
 func (p *Parser) parseResource() (*Node, error) {
 	tok := p.scanNextToken()
+	p.Log("parsing resource %s", tok.Value)
 	return p.makeNode(tok, NodeResource), nil
 }
 
 func (p *Parser) parseVariable() (*Node, error) {
 	tok := p.scanNextToken()
+	p.Log("parsing variable %s", tok.Value)
 	return p.makeNode(tok, NodeVariable), nil
 }
 
