@@ -257,6 +257,13 @@ type ParseResult struct {
 	Tokens []*Token
 }
 
+// Script converts the parse result to an executable script
+func (result *ParseResult) Script() *Script {
+	return &Script{
+		Nodes: result.Nodes,
+	}
+}
+
 func (result *ParseResult) addError(err error) *ParseResult {
 	result.Errors = append(result.Errors, err)
 	return result

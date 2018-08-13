@@ -7,9 +7,9 @@ import (
 
 // Scanner is used for splitting an input stream into tokens.
 type Scanner struct {
-	r       *bufio.Reader
 	lineNum int
 	linePos int
+	r       *bufio.Reader
 }
 
 // NewScanner starts a new scanner.

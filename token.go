@@ -2,11 +2,11 @@ package robolang
 
 // Token contains a token from the scanner.
 type Token struct {
+	LineNum  int       `json:"lineNum"`
+	LinePos  int       `json:"linePos"`
 	Type     TokenType `json:"-"`
 	TypeName string    `json:"type"`
 	Value    string    `json:"value"`
-	LineNum  int       `json:"lineNum"`
-	LinePos  int       `json:"linePos"`
 }
 
 // String converts the token to a human-readable form.

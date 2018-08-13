@@ -6,11 +6,11 @@ import (
 
 // Node is a node in the AST
 type Node struct {
+	Args     []*Node  `json:"args,omitempty"`
+	Children []*Node  `json:"children,omitempty"`
 	Token    *Token   `json:"token"`
 	Type     NodeType `json:"-"`
 	TypeText string   `json:"type"`
-	Args     []*Node  `json:"args,omitempty"`
-	Children []*Node  `json:"children,omitempty"`
 }
 
 // String converts the node to a human-readable form.
