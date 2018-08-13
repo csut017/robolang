@@ -20,6 +20,7 @@ type Parser struct {
 var (
 	skipTokens = map[TokenType]bool{
 		TokenWhitespace: true,
+		TokenComment:    true,
 	}
 )
 
@@ -142,11 +143,16 @@ func (p *Parser) parseFunction() (*Node, error) {
 	whitespace := tok.Value
 
 	for cont {
-		child, err := p.parseItem()
-		if err != nil {
-			return node, err
+		tok = p.scanNextToken()
+		if tok.Type != TokenNewLine {
+			p.unscan()
+			child, err := p.parseItem()
+			if err != nil {
+				return node, err
+			}
+			node.AddChild(child)
 		}
-		node.AddChild(child)
+
 		for tok = p.scan(); tok.Type == TokenNewLine; tok = p.scan() {
 		}
 		cont = (tok.Type == TokenWhitespace) && (tok.Value == whitespace)

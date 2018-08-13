@@ -26,12 +26,14 @@ func TestParseFromString(t *testing.T) {
 	}{
 		{"clear()", "NodeFunction:clear"},
 		{"say(text='hello')", "NodeFunction:say(NodeArgument:text->(NodeConstant:hello))"},
+		{"say(text='hello') # test\nsay(text='world')", "NodeFunction:say(NodeArgument:text->(NodeConstant:hello))\nNodeFunction:say(NodeArgument:text->(NodeConstant:world))"},
 		{"show(resource=@hello)", "NodeFunction:show(NodeArgument:resource->(NodeResource:hello))"},
 		{"set(variable=&count,value=1)", "NodeFunction:set(NodeArgument:variable->(NodeVariable:count),NodeArgument:value->(NodeConstant:1))"},
 		{"waitForTime(duration=5m)", "NodeFunction:waitForTime(NodeArgument:duration->(NodeConstant:5m))"},
 		{"waitForInput():\n  clear()", "NodeFunction:waitForInput->(NodeFunction:clear)"},
 		{"clear()\nsay(text=@hello)", "NodeFunction:clear\nNodeFunction:say(NodeArgument:text->(NodeResource:hello))"},
 		{"waitForInput():\n  clear()\n  say(text=@hello)", "NodeFunction:waitForInput->(NodeFunction:clear,NodeFunction:say(NodeArgument:text->(NodeResource:hello)))"},
+		{"waitForInput():\n  #clear()\n  say(text=@hello)", "NodeFunction:waitForInput->(NodeFunction:say(NodeArgument:text->(NodeResource:hello)))"},
 	}
 	for _, test := range tests {
 		t.Logf("==== Parsing `%s` ====", test.input)
