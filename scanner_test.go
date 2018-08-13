@@ -17,7 +17,7 @@ func TestScanTokens(t *testing.T) {
 		{"(", Token{Type: TokenOpenBracket, Value: "("}},
 		{")", Token{Type: TokenCloseBracket, Value: ")"}},
 		{"=", Token{Type: TokenEquals, Value: "="}},
-		{"#test", Token{Type: TokenVariable, Value: "test"}},
+		{"&test", Token{Type: TokenVariable, Value: "test"}},
 		{"@test", Token{Type: TokenResource, Value: "test"}},
 		{"test", Token{Type: TokenIdentifier, Value: "test"}},
 		{"'text'", Token{Type: TokenText, Value: "text"}},
@@ -35,6 +35,7 @@ func TestScanTokens(t *testing.T) {
 		{"%", Token{Type: TokenOperator, Value: "%"}},
 		{"<", Token{Type: TokenOperator, Value: "<"}},
 		{">", Token{Type: TokenOperator, Value: ">"}},
+		{"# a comment", Token{Type: TokenComment, Value: " a comment"}},
 	}
 
 	for _, test := range tests {

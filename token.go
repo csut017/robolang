@@ -53,7 +53,7 @@ const (
 	// TokenVariable defines a variable name (_name)
 	TokenVariable
 
-	// TokenResource defines a resource name (@name)
+	// TokenResource defines a resource name (&name)
 	TokenResource
 
 	// TokenText is a string constant ('text')
@@ -67,4 +67,7 @@ const (
 
 	// TokenOperator is a maths operator (+-*/%<>)
 	TokenOperator
+
+	// TokenComment is a comment (#...)
+	TokenComment
 )

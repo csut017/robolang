@@ -4,9 +4,9 @@ package robolang
 
 import "strconv"
 
-const _ScriptState_name = "ScriptStatePendingScriptStateWaitingScriptStateFinished"
+const _ScriptState_name = "ScriptStatePendingScriptStateWaitingScriptStateFinishedScriptStateFailed"
 
-var _ScriptState_index = [...]uint8{0, 18, 36, 55}
+var _ScriptState_index = [...]uint8{0, 18, 36, 55, 72}
 
 func (i ScriptState) String() string {
 	if i < 0 || i >= ScriptState(len(_ScriptState_index)-1) {

@@ -30,7 +30,7 @@ func (s *Script) executeLoop() error {
 		return err
 	}
 
-	next := s.current.next
+	// next := s.current.next
 
 	return nil
 }

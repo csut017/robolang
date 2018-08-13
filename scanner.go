@@ -28,7 +28,7 @@ func (s *Scanner) Scan() *Token {
 		return s.makeToken(TokenWhitespace, s.scanWhitespace())
 	} else if ch == '@' {
 		return s.scanIdentifier(TokenResource)
-	} else if ch == '#' {
+	} else if ch == '&' {
 		return s.scanIdentifier(TokenVariable)
 	} else if s.isLetter(ch) {
 		s.unread()
@@ -38,6 +38,8 @@ func (s *Scanner) Scan() *Token {
 		return s.scanNumber()
 	} else if ch == '\'' {
 		return s.scanText()
+	} else if ch == '#' {
+		return s.scanComment()
 	}
 
 	// Check the single character tokens
@@ -109,6 +111,22 @@ func (s *Scanner) read() rune {
 		return eof
 	}
 	return ch
+}
+
+func (s *Scanner) scanComment() *Token {
+	var buf bytes.Buffer
+	buf.WriteRune(s.read())
+	for {
+		if ch := s.read(); ch == eof {
+			break
+		} else if ch == '\n' {
+			s.unread()
+			break
+		} else {
+			buf.WriteRune(ch)
+		}
+	}
+	return s.makeToken(TokenComment, buf.String())
 }
 
 func (s *Scanner) scanIdent() string {
