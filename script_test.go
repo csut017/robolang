@@ -2,7 +2,7 @@ package robolang
 
 import "testing"
 
-func TestFromPraseResult(t *testing.T) {
+func TestFromParseResult(t *testing.T) {
 	parser := NewParser("clear()")
 	script := parser.Parse().Script()
 	if len(script.Nodes) != 1 {
