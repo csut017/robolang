@@ -81,3 +81,27 @@ func TestVariableGet(t *testing.T) {
 		}
 	}
 }
+
+func TestVariableAdd(t *testing.T) {
+	table := NewVariableTable(NewVariable("Exists"))
+	tests := []struct {
+		Key     string
+		Success bool
+	}{
+		{"Missing", true},
+		{"Exists", false},
+	}
+
+	for _, test := range tests {
+		_, err := table.Add(test.Key)
+		if err == nil {
+			if !test.Success {
+				t.Errorf("Expected an error, not nil")
+			}
+		} else {
+			if test.Success {
+				t.Errorf("Unexpected error: %v", err)
+			}
+		}
+	}
+}

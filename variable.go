@@ -1,6 +1,9 @@
 package robolang
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 // VariableTable defines all the available variables for a block
 type VariableTable struct {
@@ -31,6 +34,17 @@ func (table *VariableTable) Get(name string) (*VariableDefinition, bool) {
 		return table.Parent.Get(name)
 	}
 	return nil, false
+}
+
+// Add adds a new variable to the table
+func (table *VariableTable) Add(name string) (*VariableDefinition, error) {
+	_, exists := table.Variables[name]
+	if exists {
+		return nil, fmt.Errorf("Variable %s already exists", name)
+	}
+	value := NewVariable(name)
+	table.Variables[name] = value
+	return value, nil
 }
 
 // VariableMap is a convience wrapper to simplify the marshalling and unmarshalling of variable definitions
