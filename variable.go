@@ -3,6 +3,7 @@ package robolang
 import (
 	"encoding/json"
 	"fmt"
+	"sort"
 )
 
 // VariableTable defines all the available variables for a block
@@ -52,18 +53,19 @@ type VariableMap map[string]*VariableDefinition
 
 // MarshalJSON converts a VariableMap to JSON
 func (fm VariableMap) MarshalJSON() ([]byte, error) {
-	out, pos := make([]VariableDefinition, len(fm)), 0
+	out, pos := make(VariableDefinitions, len(fm)), 0
 	for key, val := range fm {
 		val.Name = key
 		out[pos] = *val
 		pos++
 	}
+	sort.Sort(out)
 	return json.Marshal(out)
 }
 
 // UnmarshalJSON converts JSON to a VariableMap
 func (fm *VariableMap) UnmarshalJSON(data []byte) error {
-	in := []VariableDefinition{}
+	in := VariableDefinitions{}
 	if err := json.Unmarshal(data, &in); err != nil {
 		return err
 	}
@@ -73,6 +75,24 @@ func (fm *VariableMap) UnmarshalJSON(data []byte) error {
 		(*fm)[val.Name] = &out
 	}
 	return nil
+}
+
+// VariableDefinitions is a convience wrapper that allows sorting a list of VariableDefinition instances
+type VariableDefinitions []VariableDefinition
+
+// Len returns the number of instances in this list
+func (vd VariableDefinitions) Len() int {
+	return len(vd)
+}
+
+// Less checks which name is the lower of two
+func (vd VariableDefinitions) Less(i, j int) bool {
+	return vd[i].Name < vd[j].Name
+}
+
+// Swap changes the location of two variable definitions
+func (vd VariableDefinitions) Swap(i, j int) {
+	vd[i], vd[j] = vd[j], vd[i]
 }
 
 // VariableDefinition defines a variable that holds a value

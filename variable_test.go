@@ -9,12 +9,13 @@ func TestVariableMapToJSON(t *testing.T) {
 	fm := VariableMap{}
 	fm["wait"] = NewVariable("wait")
 	fm["hello"] = NewVariable("hello").Set("world")
+	fm["name"] = NewVariable("name")
 	out, err := json.Marshal(fm)
 	if err != nil {
 		t.Errorf("JSON marshal failed: %v", err)
 	}
 
-	expected := "[{\"name\":\"wait\"},{\"name\":\"hello\",\"value\":\"world\"}]"
+	expected := "[{\"name\":\"hello\",\"value\":\"world\"},{\"name\":\"name\"},{\"name\":\"wait\"}]"
 	if string(out) != expected {
 		t.Errorf("Unexpected JSON output: expected %s, actual %s", expected, out)
 	}

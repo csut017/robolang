@@ -85,10 +85,14 @@ func (p *Parser) makeNode(tok *Token, tokenType NodeType) *Node {
 }
 
 func (p *Parser) makeUnexpectedError(tok *Token, expected string) error {
-	if expected != "" {
-		return fmt.Errorf("Unexpected token '%s', expected %s at line %d, pos %d", tok.Value, expected, tok.LineNum, tok.LinePos)
+	value := tok.Value
+	if tok.Type == TokenEOF {
+		value = "<EOF>"
 	}
-	return fmt.Errorf("Unexpected token '%s' at line %d, pos %d", tok.Value, tok.LineNum, tok.LinePos)
+	if expected != "" {
+		return newParseError(tok, "Unexpected token '%s', expected %s", value, expected)
+	}
+	return newParseError(tok, "Unexpected token '%s'", value)
 }
 
 func (p *Parser) parseConstant() (*Node, error) {
@@ -101,7 +105,7 @@ func (p *Parser) parseFunction() (*Node, error) {
 	tok := p.scanNextToken()
 	if tok.Type != TokenIdentifier {
 		p.clearToNewLine()
-		return p.makeNode(tok, NodeInvalid), p.makeUnexpectedError(tok, "")
+		return p.makeNode(tok, NodeInvalid), p.makeUnexpectedError(tok, TokenIdentifier.String())
 	}
 
 	node := p.makeNode(tok, NodeFunction)
@@ -166,7 +170,7 @@ func (p *Parser) parseFunctionArg() (*Node, error) {
 	tok := p.scanNextToken()
 	if tok.Type != TokenIdentifier {
 		p.clearToNewLine()
-		return p.makeNode(tok, NodeInvalid), p.makeUnexpectedError(tok, "")
+		return p.makeNode(tok, NodeInvalid), p.makeUnexpectedError(tok, "TokenCloseBracket or TokenIdentifier")
 	}
 
 	p.Log("parsing function argument %s", tok.Value)
@@ -185,7 +189,7 @@ func (p *Parser) parseFunctionArg() (*Node, error) {
 		}
 		node.AddChild(child)
 	} else {
-		err := fmt.Errorf("Unable to parse function arg, found '%s' at line %d, pos %d", tok.String(), tok.LineNum, tok.LinePos)
+		err := newParseError(tok, "Unable to parse function arg, found '%v'", tok)
 		return node, err
 	}
 	return node, nil
@@ -287,4 +291,24 @@ func (result *ParseResult) addNode(node *Node) *ParseResult {
 func (result *ParseResult) addToken(token *Token) *ParseResult {
 	result.Tokens = append(result.Tokens, token)
 	return result
+}
+
+// ParseError provides a consistent format for reporting parse errors
+type ParseError struct {
+	Message      string
+	LineNumber   int
+	LinePosition int
+}
+
+// Error converts this struct into an error message
+func (err *ParseError) Error() string {
+	return fmt.Sprintf("%s at line %d, pos %d", err.Message, err.LineNumber, err.LinePosition)
+}
+
+func newParseError(tok *Token, format string, a ...interface{}) error {
+	return &ParseError{
+		Message:      fmt.Sprintf(format, a...),
+		LineNumber:   tok.LineNum,
+		LinePosition: tok.LinePos,
+	}
 }

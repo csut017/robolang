@@ -36,6 +36,7 @@ func TestScanTokens(t *testing.T) {
 		{"<", Token{Type: TokenOperator, Value: "<"}},
 		{">", Token{Type: TokenOperator, Value: ">"}},
 		{"# a comment", Token{Type: TokenComment, Value: " a comment"}},
+		{"!", Token{Type: TokenIllegal, Value: "!"}},
 	}
 
 	for _, test := range tests {

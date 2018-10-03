@@ -8,12 +8,14 @@ import (
 func TestFunctionMapToJSON(t *testing.T) {
 	fm := FunctionMap{}
 	fm["wait"] = &FunctionDefinition{}
+	fm["show"] = &FunctionDefinition{}
+	fm["repeat"] = &FunctionDefinition{}
 	out, err := json.Marshal(fm)
 	if err != nil {
 		t.Errorf("JSON marshal failed: %v", err)
 	}
 
-	expected := "[{\"name\":\"wait\"}]"
+	expected := "[{\"name\":\"repeat\"},{\"name\":\"show\"},{\"name\":\"wait\"}]"
 	if string(out) != expected {
 		t.Errorf("Unexpected JSON output: expected %s, actual %s", expected, out)
 	}

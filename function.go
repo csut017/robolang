@@ -3,6 +3,7 @@ package robolang
 import (
 	"encoding/json"
 	"fmt"
+	"sort"
 )
 
 // Function is a block of functionality that can be executed
@@ -58,18 +59,19 @@ type FunctionMap map[string]*FunctionDefinition
 
 // MarshalJSON converts a FunctionMap to JSON
 func (fm FunctionMap) MarshalJSON() ([]byte, error) {
-	out, pos := make([]FunctionDefinition, len(fm)), 0
+	out, pos := make(FunctionDefinitions, len(fm)), 0
 	for key, val := range fm {
 		val.Name = key
 		out[pos] = *val
 		pos++
 	}
+	sort.Sort(out)
 	return json.Marshal(out)
 }
 
 // UnmarshalJSON converts JSON to a FunctionMap
 func (fm *FunctionMap) UnmarshalJSON(data []byte) error {
-	in := []FunctionDefinition{}
+	in := FunctionDefinitions{}
 	if err := json.Unmarshal(data, &in); err != nil {
 		return err
 	}
@@ -79,6 +81,24 @@ func (fm *FunctionMap) UnmarshalJSON(data []byte) error {
 		(*fm)[val.Name] = &function
 	}
 	return nil
+}
+
+// FunctionDefinitions is a convience wrapper that allows sorting a list of FunctionDefinition instances
+type FunctionDefinitions []FunctionDefinition
+
+// Len returns the number of instances in this list
+func (vd FunctionDefinitions) Len() int {
+	return len(vd)
+}
+
+// Less checks which name is the lower of two
+func (vd FunctionDefinitions) Less(i, j int) bool {
+	return vd[i].Name < vd[j].Name
+}
+
+// Swap changes the location of two Function definitions
+func (vd FunctionDefinitions) Swap(i, j int) {
+	vd[i], vd[j] = vd[j], vd[i]
 }
 
 // FunctionDefinition defines a function that can be executed in a block

@@ -11,6 +11,6 @@ IF %ERRORLEVEL% NEQ 0 (
 )
 
 ECHO %me%: Generating coverage
-go test -covermode=count -coverprofile=coverage.out
+go test -coverprofile=coverage.out
 
 go tool cover -html=coverage.out
