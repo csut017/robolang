@@ -1,0 +1,24 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compile and Package",
+            "type": "shell",
+            "command": "_build.cmd",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }, {
+            "label": "Run All Tests",
+            "type": "shell",
+            "command": "_test.cmd",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        }
+    ]
+}
